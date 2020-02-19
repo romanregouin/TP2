@@ -23,14 +23,8 @@ complexe_double_t add_complexe_double (const complexe_double_t c1, const complex
 complexe_float_t mult_complexe_float (const complexe_float_t c1, const complexe_float_t c2)
 {
   complexe_float_t r ;
-
-  /* 
-     a implementer
-  */
-
-  r.real = 0.0 ;
-  r.imaginary = 0.0 ;
-  
+  r.imaginary = 0.0;
+  r.real = c1.real * c2.real - (c1.imaginary * c2.imaginary);
   return r ;
 }
 
