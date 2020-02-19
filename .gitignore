@@ -19,6 +19,8 @@
 # Libraries
 *.la
 *.lo
+*.a
+*.so
 
 # Shared objects (inc. Windows DLLs)
 
