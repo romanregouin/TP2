@@ -14,8 +14,8 @@ complexe_double_t add_complexe_double (const complexe_double_t c1, const complex
 {
   complexe_double_t r ;
 
-  r.real = c1.real + c2.real ;
-  r.imaginary = c1.imaginary + c2.imaginary ;
+  r.real = c1.real * c2.real - c1.imaginary * c2.imaginary;
+  r.imaginary = c1.real * c2.imaginary + c1.imaginary + c2.real;
   
   return r ;
 }
