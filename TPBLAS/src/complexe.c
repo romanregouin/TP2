@@ -32,10 +32,6 @@ complexe_double_t mult_complexe_double (const complexe_double_t c1, const comple
   {
   complexe_double_t r ;
 
-  /* 
-     a implementer
-  */
-  
   r.real = 0.0 ;
   r.imaginary = 0.0 ;
   
