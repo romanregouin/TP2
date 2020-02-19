@@ -2,7 +2,11 @@
 #include <x86intrin.h>
 
 // La frequence du processeur est de 2.6 GHZ
+<<<<<<< HEAD
 static const float duree_cycle = (float) 1 / (float) 2.7 ;
+=======
+static const float duree_cycle = (float) 1 / (float) 2.5 ;
+>>>>>>> 50ae13dc4bdb5562456c38a74141f747dfbd5b30
 // duree du cycle en nano seconde 10^-9
 
 static unsigned long long int residu ;
