@@ -30,6 +30,11 @@
 *.i*86
 *.x86_64
 *.hex
+test_dot
+test_complexe
+test_complexe2
+test_dot_dyn
+
 
 # Debug files#
 *.dSYM/
