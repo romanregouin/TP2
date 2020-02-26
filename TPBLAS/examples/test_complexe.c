@@ -37,14 +37,18 @@ int main (int argc, char **argv)
  start =_rdtsc () ;
  
  for (i = 0 ; i < NB_FOIS; i++)
-   {
-     cd3 = add_complexe_double (cd1, cd2) ;
+   { 
+     cd3 = div_complexe_double (cd1, cd2) ;
    }
 
  end = _rdtsc () ;
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
+<<<<<<< HEAD
   calcul_flop ("calcul complexe ", NB_FOIS*2, end-start) ;
+=======
+  calcul_flop ("calcul complexe ", NB_FOIS*14, end-start) ;
+>>>>>>> e37cc54d0dbdcd06cb43c207c817a7eacc7dbaec
   exit (0) ;
 }
