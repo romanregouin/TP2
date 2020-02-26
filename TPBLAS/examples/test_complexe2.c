@@ -39,13 +39,14 @@ int main (int argc, char **argv)
  for (i = 0 ; i < NB_FOIS; i++)
    {
      cd3 = add_complexe_double (cd1, cd2) ;
+     cd1.real +=0.01;
    }
 
  end = _rdtsc () ;
 
   printf ("apres boucle cd3.real %f cd3.imaginary %f %lld cycles \n", cd3.real, cd3.imaginary, end-start) ;
 
-  calcul_flop ("calcul complexe ", NB_FOIS*4, end-start) ;
+  calcul_flop ("calcul complexe ", NB_FOIS*3, end-start) ;
   exit (0) ;
 }
 

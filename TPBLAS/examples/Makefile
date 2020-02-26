@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_dot test_dot_dyn
+all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap
 
 INC_DIR=../include
 
@@ -7,10 +7,16 @@ LIB_DIR=../lib
 LIBST=-lmnblas
 LIBDYN=-lmnblasdyn
 
-OPTIONS_COMPIL  =-Wall -O2 -fPIC -I$(INC_DIR)
+OPTIONS_COMPIL  = -g -Wall -O2 -fPIC -I$(INC_DIR)
 
 OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)  
 OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN)  
+
+test_swap : test_swap.o $(LIB_DIR)/libmnblas.a
+	gcc -o $@ test_swap.o $(OPTIONS_LINK_STATIC)
+
+test_swap.o: test_swap.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_swap.c
 
 test_dot: test_dot.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_dot test_dot.o flop.o $(OPTIONS_LINK_STATIC)
@@ -38,4 +44,4 @@ test_complexe2: test_complexe2.o flop.o
 
 
 clean:
-	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 *~
+	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap *~
