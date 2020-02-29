@@ -106,7 +106,7 @@ void mnblas_zaxpy(const int N, const void *alpha, const void *X,
 
 */
 
-/*
+
 
 float  mnblas_sasum(const int N, const float *X, const int incX);
 
@@ -116,7 +116,7 @@ float  mnblas_scasum(const int N, const void *X, const int incX);
 
 double mnblas_dzasum(const int N, const void *X, const int incX);
 
-*/
+
 
 /*
 CBLAS_INDEX mnblas_isamax(const int N, const float  *X, const int incX);

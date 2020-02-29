@@ -37,6 +37,8 @@ test_complexe
 test_complexe2
 test_dot_dyn
 test_swap
+test_copy
+test_asum
 
 # Debug files#
 *.dSYM/
