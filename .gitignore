@@ -39,6 +39,7 @@ test_dot_dyn
 test_swap
 test_copy
 test_asum
+test_iamin
 
 # Debug files#
 *.dSYM/
