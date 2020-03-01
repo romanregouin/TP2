@@ -30,7 +30,7 @@ void vector_print (vfloat V)
 
   for (i = 0; i < VECSIZE; i++)
     printf ("%f ", V[i]) ;
-  printf ("\n") ;
+    printf ("\n") ;
   
   return ;
 }

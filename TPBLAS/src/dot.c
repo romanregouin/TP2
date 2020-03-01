@@ -55,7 +55,8 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  
+  ((float*)dotu)[0]=0.0;
+  ((float*)dotu)[1]=0.0;
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
       ((float*)dotu)[1] += ((float*)Y)[2*j] * ((float*)X)[2*i+1] + ((float*)Y)[2*j+1] * ((float*)X)[2*i];
@@ -69,7 +70,8 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-
+  ((float*)dotc)[1] = 0.0;
+  ((float*)dotc)[0] = 0.0;
   
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
@@ -85,7 +87,8 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  
+  ((double*)dotu)[0]=0.0;
+  ((double*)dotu)[1]=0.0;
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
       ((double*)dotu)[1] += ((double*)Y)[2*j] * ((double*)X)[2*i+1] + ((double*)Y)[2*j+1] * ((double*)X)[2*i];
@@ -99,7 +102,8 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
 {
   register unsigned int i = 0 ;
   register unsigned int j = 0 ;
-  
+  ((double*)dotc)[1] = 0.0;
+  ((double*)dotc)[0] = 0.0;
   for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
     {
       ((double*)dotc)[1] += ((double*)Y)[2*j] * (-((double*)X)[2*i+1]) + ((double*)Y)[2*j+1] * ((double*)X)[2*i];
