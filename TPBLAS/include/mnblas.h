@@ -1,4 +1,4 @@
-#define CBLAS_INDEX size_t  /* this may vary between platforms */
+#define CBLAS_INDEX __SIZE_TYPE__  /* this may vary between platforms */
 
 typedef enum {MNCblasRowMajor=101, MNCblasColMajor=102} MNCBLAS_LAYOUT;
 typedef enum {MNCblasNoTrans=111, MNCblasTrans=112, MNCblasConjTrans=113} MNCBLAS_TRANSPOSE;
@@ -106,7 +106,7 @@ void mnblas_zaxpy(const int N, const void *alpha, const void *X,
 
 */
 
-/*
+
 
 float  mnblas_sasum(const int N, const float *X, const int incX);
 
@@ -116,9 +116,17 @@ float  mnblas_scasum(const int N, const void *X, const int incX);
 
 double mnblas_dzasum(const int N, const void *X, const int incX);
 
-*/
+
+CBLAS_INDEX mnblas_isamin(const int N, const float  *X, const int incX);
+
+CBLAS_INDEX mnblas_idamin(const int N, const double *X, const int incX);
+
+CBLAS_INDEX mnblas_icamin(const int N, const void   *X, const int incX);
+
+CBLAS_INDEX mnblas_izamin(const int N, const void   *X, const int incX);
 
 /*
+
 CBLAS_INDEX mnblas_isamax(const int N, const float  *X, const int incX);
 
 CBLAS_INDEX mnblas_idamax(const int N, const double *X, const int incX);
