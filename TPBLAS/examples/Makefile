@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_copy test_asum test_iamin
+all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_copy test_asum test_iamin test_iamax
 
 INC_DIR=../include
 
@@ -11,6 +11,12 @@ OPTIONS_COMPIL  = -g -Wall -O2 -fPIC -I$(INC_DIR)
 
 OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)  
 OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN) 
+
+test_iamax : test_iamax.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o $@ test_iamax.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_iamax.o : test_iamax.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_iamax.c
 
 test_iamin : test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o $@ test_iamin.o flop.o $(OPTIONS_LINK_STATIC)
@@ -62,4 +68,4 @@ test_complexe2: test_complexe2.o flop.o
 
 
 clean:
-	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap test_asum test_iamin *~
+	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap test_asum test_iamin test_iamax *~

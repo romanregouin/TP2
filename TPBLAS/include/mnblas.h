@@ -125,7 +125,6 @@ CBLAS_INDEX mnblas_icamin(const int N, const void   *X, const int incX);
 
 CBLAS_INDEX mnblas_izamin(const int N, const void   *X, const int incX);
 
-/*
 
 CBLAS_INDEX mnblas_isamax(const int N, const float  *X, const int incX);
 
@@ -134,7 +133,7 @@ CBLAS_INDEX mnblas_idamax(const int N, const double *X, const int incX);
 CBLAS_INDEX mnblas_icamax(const int N, const void   *X, const int incX);
 
 CBLAS_INDEX mnblas_izamax(const int N, const void   *X, const int incX);
-*/
+
 
 /*
 float  mnblas_snrm2(const int N, const float *X, const int incX);
