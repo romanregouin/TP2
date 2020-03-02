@@ -44,9 +44,20 @@ int main (int argc, char **argv){
     print_vectf(f1,10);
 
     CBLAS_INDEX indice;
-    indice = mnblas_isamin(10,f1,1);
-    printf("indice du min  : %ld\n",indice);
+    unsigned long long int start, end ;
 
+    start =_rdtsc () ;
+ 
+    for (int i = 0 ; i < NB_FOIS; i++){
+        indice = mnblas_isamin(10,f1,1);
+        f1[0] +=0.1;
+    }
+
+    end = _rdtsc () ;
+
+    printf ("apres boucle min : %ld %lld cycles \n", indice, end-start) ;
+
+    calcul_flop ("iamin float ", NB_FOIS*2, end-start) ;
     
     double incrementd = 0.9;
     double d1[10];
@@ -59,8 +70,18 @@ int main (int argc, char **argv){
     print_vectd(d1,10);
 
     CBLAS_INDEX indiced;
-    indiced = mnblas_idamin(10,d1,1);
-    printf("indice du min  : %ld\n",indiced);
+    start =_rdtsc () ;
+
+        for (int i = 0 ; i < NB_FOIS; i++){
+        indiced = mnblas_idamin(10,d1,1);
+        d1[0] +=0.1;
+    }
+
+    end = _rdtsc () ;
+
+    printf ("apres boucle indiced : %ld %lld cycles \n", indiced, end-start) ;
+
+    calcul_flop ("iamin double ", NB_FOIS*2, end-start) ;
 
 
     float incrementcf = 0.9;
@@ -75,8 +96,18 @@ int main (int argc, char **argv){
     print_vectcf(c1,10);
 
     CBLAS_INDEX indicecf;
-    indicecf = mnblas_icamin(10,c1,1);
-    printf("indice du min  : %ld\n",indicecf);
+    start =_rdtsc () ;
+
+        for (int i = 0 ; i < NB_FOIS; i++){
+        indicecf = mnblas_icamin(10,c1,1);
+        c1[0].real +=0.1;
+    }
+
+    end = _rdtsc () ;
+
+    printf ("apres boucle indicecf : %ld %lld cycles \n", indicecf, end-start) ;
+
+    calcul_flop ("iamin complexe float ", NB_FOIS*4, end-start) ;
 
     double incrementcd = 0.9;
     complexe_double_t z1[10];
@@ -90,8 +121,18 @@ int main (int argc, char **argv){
     print_vectcd(z1,10);
 
     CBLAS_INDEX indicecd;
-    indicecd = mnblas_izamin(10,z1,1);
-    printf("indice du min  : %ld\n",indicecd);
+    start =_rdtsc () ;
+
+        for (int i = 0 ; i < NB_FOIS; i++){
+        indicecd =  mnblas_izamin(10,z1,1);
+        z1[0].real += 0.1;
+    }
+
+    end = _rdtsc () ;
+
+    printf ("apres boucle indicecd : %ld %lld cycles \n", indicecd, end-start) ;
+
+    calcul_flop ("iamin complexe double ", NB_FOIS*4, end-start) ;
 
     exit (0) ;
 }
