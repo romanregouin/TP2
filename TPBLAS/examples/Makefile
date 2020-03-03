@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_copy test_asum test_iamin test_iamax test_axpy test_nrm2
+all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_copy test_asum test_iamin test_iamax test_axpy test_nrm2 test_gemv
 
 INC_DIR=../include
 
@@ -11,6 +11,12 @@ OPTIONS_COMPIL  = -g -Wall -O2 -fPIC -I$(INC_DIR)
 
 OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)  
 OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN) -lm
+
+test_gemv : test_gemv.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o $@ test_gemv.o flop.o $(OPTIONS_LINK_STATIC)
+
+test_gemv.o : test_gemv.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_gemv.c
 
 test_nrm2 : test_nrm2.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o $@ test_nrm2.o flop.o $(OPTIONS_LINK_STATIC) -lm

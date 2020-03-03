@@ -42,6 +42,7 @@ test_asum
 test_iamin
 test_iamax
 test_nrm2
+test_gemv
 
 # Debug files#
 *.dSYM/
