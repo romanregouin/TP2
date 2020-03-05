@@ -139,7 +139,6 @@ CBLAS_INDEX mnblas_icamax(const int N, const void   *X, const int incX);
 CBLAS_INDEX mnblas_izamax(const int N, const void   *X, const int incX);
 
 
-/*
 float  mnblas_snrm2(const int N, const float *X, const int incX);
 
 double mnblas_dnrm2(const int N, const double *X, const int incX);
@@ -148,7 +147,6 @@ float  mnblas_scnrm2(const int N, const void *X, const int incX);
 
 double mnblas_dznrm2(const int N, const void *X, const int incX);
 
- */
 
 
 /*
@@ -165,7 +163,6 @@ double mnblas_dznrm2(const int N, const void *X, const int incX);
  * ===========================================================================
  */
 
-/*
 
 void mncblas_sgemv(const MNCBLAS_LAYOUT layout,
                  const MNCBLAS_TRANSPOSE TransA, const int M, const int N,
@@ -191,7 +188,6 @@ void mncblas_zgemv(MNCBLAS_LAYOUT layout,
                  const void *X, const int incX, const void *beta,
                  void *Y, const int incY);
 
-*/
 
 /*
  * ===========================================================================
