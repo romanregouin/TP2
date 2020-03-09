@@ -164,7 +164,7 @@ int main (int argc, char **argv)
      end = _rdtsc () ;
      
      printf ("mnblas_caxpy %d : Y[0].r = %3.2f, Y[0].im = %3.2f  Y[655355].r= %3.2f Y[655355].im= %3.2f nombre de cycles: %Ld\n", i,vec_cf2[0].real,vec_cf2[0].imaginary,vec_cf2[65535].real,vec_cf2[65535].imaginary, end-start);
-     calcul_flop ("sdot ", 2 * VECSIZE, end-start) ;
+     calcul_flop ("sdot ", 8 * VECSIZE, end-start) ;
    }
 
   vectorcd_init (vec_cd1, 1.0) ;
@@ -178,7 +178,7 @@ int main (int argc, char **argv)
      end = _rdtsc () ;
      
      printf ("mnblas_zaxpy %d : Y[0].r = %3.2f, Y[0].im = %3.2f  Y[655355].r= %3.2f Y[655355].im= %3.2f nombre de cycles: %Ld\n", i,vec_cd2[0].real,vec_cd2[0].imaginary,vec_cd2[65535].real,vec_cd2[65535].imaginary, end-start);
-     calcul_flop ("sdot ", 2 * VECSIZE, end-start) ;
+     calcul_flop ("sdot ", 8 * VECSIZE, end-start) ;
    }
 
   
