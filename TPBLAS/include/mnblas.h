@@ -1,5 +1,5 @@
 #define CBLAS_INDEX __SIZE_TYPE__  /* this may vary between platforms */
-
+#define max(a,b) (((a)>(b))?(a):(b))
 typedef enum {MNCblasRowMajor=101, MNCblasColMajor=102} MNCBLAS_LAYOUT;
 typedef enum {MNCblasNoTrans=111, MNCblasTrans=112, MNCblasConjTrans=113} MNCBLAS_TRANSPOSE;
 typedef enum {MNCblasUpper=121, MNCblasLower=122} MNCBLAS_UPLO;

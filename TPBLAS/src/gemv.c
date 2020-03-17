@@ -13,7 +13,7 @@ const float *X, const int incX, const float beta,float *Y, const int incY){
             *(Y+i)=*(Y+i)*beta+tmp*alpha;
         }      
     }else{
-        for(i=0;i<N;i++){
+        for(i=0;i<N;i+=incY){
             for(j=0,tmp=0; (j < M); j+=incX  ){
                 tmp+=*(A+i+j*lda)*(*(X+j));
             }
@@ -36,7 +36,7 @@ const double *X, const int incX, const double beta,double *Y, const int incY){
             *(Y+i)=*(Y+i)*beta+tmp*alpha;
         }      
     }else{
-        for(i=0;i<N;i++){
+        for(i=0;i<N;i+=incY){
             for(j=0,tmp=0; (j < M); j+=incX ){
                 tmp+=*(A+i+j*lda)*(*(X+j));
             }
@@ -51,7 +51,7 @@ const void *X, const int incX, const void *beta,void *Y, const int incY){
     register unsigned int i ;
     register unsigned int j ;
     float im,re;
-    if ((layout == MNCblasRowMajor && TransA == MNCblasNoTrans) || (layout == MNCblasColMajor && TransA != MNCblasNoTrans)) {
+    if ((layout == MNCblasRowMajor && TransA == MNCblasNoTrans) || (layout == MNCblasColMajor && TransA == MNCblasTrans)) {
         for(i=0;i<M;i+=incY){
             for(j=0,re=0,im=0; (j < N); j+=incX ){
                 re+=*(((float*)A)+i*lda*2+j*2)*(*(((float*)X)+j*2)) - *(((float*)A)+i*lda*2+j*2+1)*(*(((float*)X)+j*2+1));
@@ -59,9 +59,27 @@ const void *X, const int incX, const void *beta,void *Y, const int incY){
             }
             *(((float*)Y)+i*2)=*(((float*)Y)+i*2)*(*((float*)beta))-*(((float*)Y)+i*2+1)*(*((float*)beta)+1)+ re*(*((float*)alpha))-im*(*((float*)alpha)+1);
             *(((float*)Y)+i*2+1)=*(((float*)Y)+i*2)*(*((float*)beta)+1)+*(((float*)Y)+i*2+1)*(*((float*)beta))+ re*(*((float*)alpha)+1)+im*(*((float*)alpha));
-        }      
+        }    
+    }else if(layout == MNCblasRowMajor && TransA == MNCblasConjTrans){
+        for(i=0;i<N;i+=incY){
+            for(j=0,re=0,im=0; (j < M); j+=incX ){
+                re+=*(((float*)A)+i*2+j*2*lda)*(*(((float*)X)+j*2)) + *(((float*)A)+i*2+j*2*lda+1)*(*(((float*)X)+j*2+1));
+                im+=-*(((float*)A)+i*2+j*2*lda)*(*(((float*)X)+j*2+1))+(*(((float*)X)+j*2))* (*(((float*)A)+i*2+j*2*lda+1));
+            }
+            *(((float*)Y)+i*2)=*(((float*)Y)+i*2)*(*((float*)beta))-*(((float*)Y)+i*2+1)*(*((float*)beta)+1)+ re*(*((float*)alpha))-im*(*((float*)alpha)+1);
+            *(((float*)Y)+i*2+1)=*(((float*)Y)+i*2)*(*((float*)beta)+1)+*(((float*)Y)+i*2+1)*(*((float*)beta))+ re*(*((float*)alpha)+1)+im*(*((float*)alpha));
+        }
+    }else if(layout == MNCblasColMajor && TransA == MNCblasConjTrans){
+        for(i=0;i<M;i+=incY){
+            for(j=0,re=0,im=0; (j < N); j+=incX ){
+                re+=*(((float*)A)+i*lda*2+j*2)*(*(((float*)X)+j*2)) + *(((float*)A)+i*lda*2+j*2+1)*(*(((float*)X)+j*2+1));
+                im+=-*(((float*)A)+i*lda*2+j*2)*(*(((float*)X)+j*2+1))+(*(((float*)X)+j*2))* (*(((float*)A)+i*lda*2+j*2+1));
+            }
+            *(((float*)Y)+i*2)=*(((float*)Y)+i*2)*(*((float*)beta))-*(((float*)Y)+i*2+1)*(*((float*)beta)+1)+ re*(*((float*)alpha))-im*(*((float*)alpha)+1);
+            *(((float*)Y)+i*2+1)=*(((float*)Y)+i*2)*(*((float*)beta)+1)+*(((float*)Y)+i*2+1)*(*((float*)beta))+ re*(*((float*)alpha)+1)+im*(*((float*)alpha));
+        }    
     }else{
-        for(i=0;i<N;i++){
+        for(i=0;i<N;i+=incY){
             for(j=0,re=0,im=0; (j < M); j+=incX ){
                 re+=*(((float*)A)+i*2+j*2*lda)*(*(((float*)X)+j*2)) - *(((float*)A)+i*2+j*2*lda+1)*(*(((float*)X)+j*2+1));
                 im+=*(((float*)A)+i*2+j*2*lda)*(*(((float*)X)+j*2+1))+(*(((float*)X)+j*2))* (*(((float*)A)+i*2+j*2*lda+1));
@@ -78,24 +96,46 @@ const void *X, const int incX, const void *beta,void *Y, const int incY){
     register unsigned int i ;
     register unsigned int j ;
     double im,re;
-    if ((layout == MNCblasRowMajor && TransA == MNCblasNoTrans) || (layout == MNCblasColMajor && TransA != MNCblasNoTrans)) {
+    unsigned int index;
+    if ((layout == MNCblasRowMajor && TransA == MNCblasNoTrans) || (layout == MNCblasColMajor && TransA == MNCblasTrans)) {
         for(i=0;i<M;i+=incY){
             for(j=0,re=0,im=0; (j < N); j+=incX ){
-                re+=*(((double*)A)+i*lda*2+j*2)*(*(((double*)X)+j*2)) - *(((double*)A)+i*lda*2+j*2+1)*(*(((double*)X)+j*2+1));
-                im+=*(((double*)A)+i*lda*2+j*2)*(*(((double*)X)+j*2+1))+(*(((double*)X)+j*2))* (*(((double*)A)+i*lda*2+j*2+1));
+                index=i*lda*2+j*2;
+                re+=*(((double*)A)+index)*(*(((double*)X)+j*2)) - *(((double*)A)+index+1)*(*(((double*)X)+j*2+1));
+                im+=*(((double*)A)+index)*(*(((double*)X)+j*2+1))+(*(((double*)X)+j*2))* (*(((double*)A)+index+1));
             }
-            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)*(*((double*)beta))-*(((double*)Y)+i*2+1)*(*((double*)beta)+1)+ re*(*((double*)alpha))-im*(*((double*)alpha)+1);
-            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*(*((double*)beta)+1)+*(((double*)Y)+i*2+1)*(*((double*)beta))+ re*(*((double*)alpha)+1)+im*(*((double*)alpha));
-        }      
-    }else{
-        for(i=0;i<N;i++){
+            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)  *  *(((double*)beta)) -  *(((double*)Y)+i*2+1)  *  *(((double*)beta)+1)  +  re  *  *(((double*)alpha))  -  im  *  *(((double*)alpha)+1);
+            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*  *(((double*)beta)+1) + *(((double*)Y)+i*2+1) * *(((double*)beta))+ re * *(((double*)alpha)+1)+im * *(((double*)alpha));
+        }
+    }else if(layout == MNCblasRowMajor && TransA == MNCblasConjTrans){
+        for(i=0;i<N;i+=incY){
             for(j=0,re=0,im=0; (j < M); j+=incX ){
-                re+=*(((double*)A)+i*2+j*2*lda)*(*(((double*)X)+j*2)) - *(((double*)A)+i*2+j*2*lda+1)*(*(((double*)X)+j*2+1));
-                im+=*(((double*)A)+i*2+j*2*lda)*(*(((double*)X)+j*2+1))+(*(((double*)X)+j*2))* (*(((double*)A)+i*2+j*2*lda+1));
+                index=i*2+j*2*lda;
+                re+=*(((double*)A)+index)*(*(((double*)X)+j*2)) + *(((double*)A)+index+1)*(*(((double*)X)+j*2+1));
+                im+=*(((double*)A)+index)*(*(((double*)X)+j*2+1))-(*(((double*)X)+j*2))* (*(((double*)A)+index+1));
             }
-            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)*(*((double*)beta))-*(((double*)Y)+i*2+1)*(*((double*)beta)+1)+ re*(*((double*)alpha))-im*(*((double*)alpha)+1);
-            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*(*((double*)beta)+1)+*(((double*)Y)+i*2+1)*(*((double*)beta))+ re*(*((double*)alpha)+1)+im*(*((double*)alpha));
-
+            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)  *  *(((double*)beta)) -  *(((double*)Y)+i*2+1)  *  *(((double*)beta)+1)  +  re  *  *(((double*)alpha))  -  im  *  *(((double*)alpha)+1);
+            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*  *(((double*)beta)+1) + *(((double*)Y)+i*2+1) * *(((double*)beta))+ re * *(((double*)alpha)+1)+im * *(((double*)alpha));
+        }
+    }else if(layout == MNCblasColMajor && TransA == MNCblasConjTrans){
+        for(i=0;i<M;i+=incY){
+            for(j=0,re=0,im=0; (j < N); j+=incX ){
+                index=i*lda*2+j*2;
+                re+=*(((double*)A)+index)*(*(((double*)X)+j*2)) + *(((double*)A)+index+1)*(*(((double*)X)+j*2+1));
+                im+=*(((double*)A)+index)*(*(((double*)X)+j*2+1))-(*(((double*)X)+j*2))* (*(((double*)A)+index+1));
+            }
+            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)  *  *(((double*)beta)) -  *(((double*)Y)+i*2+1)  *  *(((double*)beta)+1)  +  re  *  *(((double*)alpha))  -  im  *  *(((double*)alpha)+1);
+            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*  *(((double*)beta)+1) + *(((double*)Y)+i*2+1) * *(((double*)beta))+ re * *(((double*)alpha)+1)+im * *(((double*)alpha));
+        }          
+    }else{
+        for(i=0;i<N;i+=incY){
+            for(j=0,re=0,im=0; (j < M); j+=incX ){
+                index=i*2+j*2*lda;
+                re+=*(((double*)A)+index)*(*(((double*)X)+j*2)) - *(((double*)A)+index+1)*(*(((double*)X)+j*2+1));
+                im+=*(((double*)A)+index)*(*(((double*)X)+j*2+1))+(*(((double*)X)+j*2))* (*(((double*)A)+index+1));
+            }
+            *(((double*)Y)+i*2)=*(((double*)Y)+i*2)  *  *(((double*)beta)) -  *(((double*)Y)+i*2+1)  *  *(((double*)beta)+1)  +  re  *  *(((double*)alpha))  -  im  *  *(((double*)alpha)+1);
+            *(((double*)Y)+i*2+1)=*(((double*)Y)+i*2)*  *(((double*)beta)+1) + *(((double*)Y)+i*2+1) * *(((double*)beta))+ re * *(((double*)alpha)+1)+im * *(((double*)alpha));
         }
     }
 }
