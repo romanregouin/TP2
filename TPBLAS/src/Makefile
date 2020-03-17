@@ -5,8 +5,8 @@ all: libmnblas.a libmnblasdyn.so
 
 LIB_DIR=../lib
 INC_DIR=../include
-OPTIM=-O2 -fopenmp
-OPTIONS= -g -O2 -Wall -fPIC $(OPTIM) -I$(INC_DIR)
+OPTIM= -O2 -fopenmp  
+OPTIONS= -g -O2 -Wall -fPIC $(OPTIM) -I$(INC_DIR) 
 # Bibliothèque statique
 
 libmnblas.a: copy.o swap.o dot.o asum.o iamin.o iamax.o complexe.o axpy.o nrm2.o gemv.o
