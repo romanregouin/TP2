@@ -1,3 +1,5 @@
+#ifndef _COMPLEXE2_H_
+#define _COMPLEXE2_H_
 
 typedef struct {
   float real ;
@@ -57,6 +59,8 @@ inline complexe_double_t div_complexe_double (const complexe_double_t c1, const 
   r.real = ( c1.real * c2.real + c1.imaginary * c2.imaginary ) / ( ( c2.real * c2.real ) + ( c2.imaginary * c2.imaginary ) );
   return r;
 }
+
+#endif
 
 
 

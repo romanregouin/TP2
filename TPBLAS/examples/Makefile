@@ -1,4 +1,4 @@
-all: test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_copy test_asum test_iamin test_iamax test_axpy test_nrm2 test_gemv
+all: test_complexe2 test_dot test_dot_dyn test_swap test_copy test_asum test_iamin test_iamax test_axpy test_nrm2 test_gemv test_gemm
 
 INC_DIR=../include
 
@@ -35,7 +35,6 @@ test_iamin : test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
 
 test_axpy.o : test_axpy.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_axpy.c
-
 
 test_axpy : test_axpy.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o $@ test_axpy.o flop.o $(OPTIONS_LINK_STATIC)
@@ -85,6 +84,11 @@ test_complexe2.o: test_complexe2.c  $(INC_DIR)/complexe2.h
 test_complexe2: test_complexe2.o flop.o
 	gcc -o test_complexe2 test_complexe2.o flop.o $(OPTIONS_LINK_STATIC)
 
+test_gemm: test_gemm.o flop.o
+	gcc -o test_gemm test_gemm.o flop.o $(OPTIONS_LINK_STATIC) 
+
+test_gemm.o: test_gemm.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_gemm.c
 
 clean:
-	rm -f *.o test_dot test_dot_dyn test_complexe test_complexe2 test_swap test_asum test_iamin test_iamax test_axpy test_copy test_nrm2 *~
+	rm -f *.o test_dot test_dot_dyn test_complexe2 test_swap test_asum test_iamin test_iamax test_axpy test_copy test_nrm2 test_gemm *~

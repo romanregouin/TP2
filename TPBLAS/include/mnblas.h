@@ -1,3 +1,4 @@
+#include "complexe2.h"
 #define CBLAS_INDEX __SIZE_TYPE__  /* this may vary between platforms */
 #define max(a,b) (((a)>(b))?(a):(b))
 typedef enum {MNCblasRowMajor=101, MNCblasColMajor=102} MNCBLAS_LAYOUT;
@@ -195,7 +196,6 @@ void mncblas_zgemv(MNCBLAS_LAYOUT layout,
  * ===========================================================================
  */
 
-/*
 
 void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                  MNCBLAS_TRANSPOSE TransB, const int M, const int N,
@@ -203,7 +203,7 @@ void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                  const int lda, const float *B, const int ldb,
                  const float beta, float *C, const int ldc);
 
-void mncblas_dgemm(MNCBLAS_LAYOUT layout, CBLAS_TRANSPOSE TransA,
+void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                  MNCBLAS_TRANSPOSE TransB, const int M, const int N,
                  const int K, const double alpha, const double *A,
                  const int lda, const double *B, const int ldb,
@@ -221,5 +221,23 @@ void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                  const int lda, const void *B, const int ldb,
                  const void *beta, void *C, const int ldc);
 
-*/
+float* applyOperation(MNCBLAS_TRANSPOSE op, MNCBLAS_LAYOUT layout, int* newrow, int* newcol, const float* m, const int row, const int col);
+float* MultiplyByScalarConstMat(const float alpha, const float* m, const int row, const int col);
+void MultiplyByScalar(const float alpha, float* m, const int row, const int col);
+float* ProduitMatriciel(const float* a, const float* b,const int m, const int k, const int n);
+void AdditionMatriciel(float* a, float* b,const int m, const int n);
 
+double* MultiplyByScalarConstMatDouble(const double alpha, const double* m, const int row, const int col);
+void MultiplyByScalarDouble(const double alpha, double* m, const int row, const int col);
+double* ProduitMatricielDouble(const double* a, const double* b,const int m, const int k, const int n);
+void AdditionMatricielDouble(double* a, double* b,const int m, const int n);
+
+complexe_float_t* MultiplyByScalarConstMatComplexe(complexe_float_t alpha, const complexe_float_t* m, const int row, const int col);
+void MultiplyByScalarComplexe(complexe_float_t alpha, complexe_float_t* m, const int row, const int col);
+complexe_float_t* ProduitMatricielComplexe(const complexe_float_t* a, const complexe_float_t* b,const int m, const int k, const int n);
+void AdditionMatricielComplexe(complexe_float_t* a, complexe_float_t* b,const int m, const int n);
+
+complexe_double_t* MultiplyByScalarConstMatComplexeDouble(complexe_double_t alpha, const complexe_double_t* m, const int row, const int col);
+void MultiplyByScalarComplexeDouble(complexe_double_t alpha, complexe_double_t* m, const int row, const int col);
+complexe_double_t* ProduitMatricielComplexeDouble(const complexe_double_t* a, const complexe_double_t* b,const int m, const int k, const int n);
+void AdditionMatricielComplexeDouble(complexe_double_t* a, complexe_double_t* b,const int m, const int n);
