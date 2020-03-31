@@ -3,7 +3,6 @@
 
 #include "mnblas.h"
 #include "complexe2.h"
-
 #include "flop.h"
 
 //#define VECSIZE    36//65536
@@ -105,6 +104,8 @@ void print_matrice_complexe_double_t(complexe_double_t* a, int m, int n){
 
 int main (int argc, char **argv){
 
+    unsigned long long int start, end ;
+
     //MATRICE FLOAT
 
     float* A = matrice_float(2,2);
@@ -118,19 +119,20 @@ int main (int argc, char **argv){
     print_matrice_float(C,2,2);
     float alpha = 2;
     float beta = 2;
-    /*float* tmp = MultiplyByScalarConstMat(alpha,A,2,2);
-    printf("tmp : ");
-    print_matrice_float(tmp,2,2);
-    float* tmp2 = ProduitMatriciel(tmp,B,2,2,2);
-    printf("produit :");
-    print_matrice_float(tmp2,2,2);
-    MultiplyByScalar(beta,C,2,2);
-    printf("C : ");
-    print_matrice_float(C,2,2);
-    AdditionMatriciel(tmp2,C,2,2);
-    printf("res :");
-    print_matrice_float(C,2,2);*/
-    mncblas_sgemm(MNCblasRowMajor,MNCblasNoTrans,MNCblasNoTrans,2,2,2,alpha,A,-1,B,-1,beta,C,-1);
+
+    start =_rdtsc () ;
+ 
+    for (int i = 0 ; i < NB_FOIS; i++){
+        mncblas_sgemm(MNCblasRowMajor,MNCblasNoTrans,MNCblasNoTrans,2,2,2,alpha,A,-1,B,-1,beta,C,-1);
+        C[0] += 0.1;
+    }
+
+    end = _rdtsc () ;
+
+    printf ("apres boucle max : %lld cycles \n",end-start) ;
+
+    calcul_flop ("gemm float ", NB_FOIS*5, end-start) ;
+    
     printf("RES :");
     print_matrice_float(C,2,2);
     free(A);

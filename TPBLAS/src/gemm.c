@@ -3,9 +3,10 @@
 #include "complexe2.h"
 
 //Matrtice Carré / lda inutile + faire attention taille des matrice a ce quelle ne dépasse la taille du cache 256*256 ou 512*512
+//vecteur 1000 4000 elements
 //PAS DE TRANSPOSE
 
-void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
+inline void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
      MNCBLAS_TRANSPOSE TransB, const int M, const int N,
      const int K, const float alpha, const float *A,
      const int lda, const float *B, const int ldb,
@@ -23,7 +24,7 @@ void mncblas_sgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
     return;
 }
 
-void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
+inline void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
      MNCBLAS_TRANSPOSE TransB, const int M, const int N,
      const int K, const double alpha, const double *A,
      const int lda, const double *B, const int ldb,
@@ -37,7 +38,7 @@ void mncblas_dgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
     free(tmp1);
 }
 
-void mncblas_cgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
+inline void mncblas_cgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
      MNCBLAS_TRANSPOSE TransB, const int M, const int N,
      const int K, const void *alpha, const void *A,
      const int lda, const void *B, const int ldb,
@@ -60,7 +61,7 @@ void mncblas_cgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
     free(tmp1);
 }
 
-void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
+inline void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
      MNCBLAS_TRANSPOSE TransB, const int M, const int N,
      const int K, const void *alpha, const void *A,
      const int lda, const void *B, const int ldb,
@@ -83,7 +84,7 @@ void mncblas_zgemm(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
     free(tmp1);
 }
 
-float* applyOperation(MNCBLAS_TRANSPOSE op, MNCBLAS_LAYOUT layout, int* newrow, int* newcol, const float* m, const int row, const int col) {
+inline float* applyOperation(MNCBLAS_TRANSPOSE op, MNCBLAS_LAYOUT layout, int* newrow, int* newcol, const float* m, const int row, const int col) {
     float* tmp = malloc(col*row*sizeof(float));
     int pos = 0;
     for(int i=0;i<col;i++){
@@ -97,7 +98,7 @@ float* applyOperation(MNCBLAS_TRANSPOSE op, MNCBLAS_LAYOUT layout, int* newrow, 
     return tmp;
 }
 
-float* MultiplyByScalarConstMat(const float alpha, const float* m, int row, int col){
+inline float* MultiplyByScalarConstMat(const float alpha, const float* m, int row, int col){
     int lg = row*col;
     float* tmp = malloc(row*col*sizeof(float));
     for(int i=0;i<lg;i++){
@@ -106,7 +107,7 @@ float* MultiplyByScalarConstMat(const float alpha, const float* m, int row, int 
     return tmp;
 }
 
-double* MultiplyByScalarConstMatDouble(const double alpha, const double* m, int row, int col){
+inline double* MultiplyByScalarConstMatDouble(const double alpha, const double* m, int row, int col){
     int lg = row*col;
     double* tmp = malloc(row*col*sizeof(double));
     for(int i=0;i<lg;i++){
@@ -115,7 +116,7 @@ double* MultiplyByScalarConstMatDouble(const double alpha, const double* m, int 
     return tmp;
 }
 
-complexe_float_t* MultiplyByScalarConstMatComplexe(complexe_float_t alpha, const complexe_float_t* m, int row, int col){
+inline complexe_float_t* MultiplyByScalarConstMatComplexe(complexe_float_t alpha, const complexe_float_t* m, int row, int col){
     int lg = row*col;
     complexe_float_t tmp;
     complexe_float_t* tmp_res = malloc(row*col*sizeof(complexe_float_t));
@@ -128,7 +129,7 @@ complexe_float_t* MultiplyByScalarConstMatComplexe(complexe_float_t alpha, const
     return tmp_res;
 }
 
-complexe_double_t* MultiplyByScalarConstMatComplexeDouble(complexe_double_t alpha, const complexe_double_t* m, int row, int col){
+inline complexe_double_t* MultiplyByScalarConstMatComplexeDouble(complexe_double_t alpha, const complexe_double_t* m, int row, int col){
     int lg = row*col;
     complexe_double_t tmp;
     complexe_double_t* tmp_res = malloc(row*col*sizeof(complexe_double_t));
@@ -142,21 +143,21 @@ complexe_double_t* MultiplyByScalarConstMatComplexeDouble(complexe_double_t alph
 }
 
 
-void MultiplyByScalar(const float alpha, float* m, int row, int col){
+inline void MultiplyByScalar(const float alpha, float* m, int row, int col){
     int lg = row*col;
     for(int i=0;i<lg;i++){
         m[i] *= alpha; 
     }
 }
 
-void MultiplyByScalarDouble(const double alpha, double* m, int row, int col){
+inline void MultiplyByScalarDouble(const double alpha, double* m, int row, int col){
     int lg = row*col;
     for(int i=0;i<lg;i++){
         m[i] *= alpha; 
     }
 }
 
-void MultiplyByScalarComplexe(complexe_float_t alpha, complexe_float_t* m, int row, int col){
+inline void MultiplyByScalarComplexe(complexe_float_t alpha, complexe_float_t* m, int row, int col){
     int lg = row*col;
     complexe_float_t tmp;
     for(int i=0;i<lg;i++){
@@ -167,7 +168,7 @@ void MultiplyByScalarComplexe(complexe_float_t alpha, complexe_float_t* m, int r
     }
 }
 
-void MultiplyByScalarComplexeDouble(complexe_double_t alpha, complexe_double_t* m, int row, int col){
+inline void MultiplyByScalarComplexeDouble(complexe_double_t alpha, complexe_double_t* m, int row, int col){
     int lg = row*col;
     complexe_double_t tmp;
     for(int i=0;i<lg;i++){
@@ -178,7 +179,7 @@ void MultiplyByScalarComplexeDouble(complexe_double_t alpha, complexe_double_t* 
     }
 }
 
-float* ProduitMatriciel(const float* a, const float* b,const int m, const int k, const int n){
+inline float* ProduitMatriciel(const float* a, const float* b,const int m, const int k, const int n){
     float* res = malloc(m*n*sizeof(float));
     float result = 0;
     for(int i=0;i<m;i++){
@@ -193,7 +194,7 @@ float* ProduitMatriciel(const float* a, const float* b,const int m, const int k,
     return res;
 }
 
-double* ProduitMatricielDouble(const double* a, const double* b,const int m, const int k, const int n){
+inline double* ProduitMatricielDouble(const double* a, const double* b,const int m, const int k, const int n){
     double* res = malloc(m*n*sizeof(double));
     double result = 0;
     for(int i=0;i<m;i++){
@@ -208,7 +209,7 @@ double* ProduitMatricielDouble(const double* a, const double* b,const int m, con
     return res;
 }
 
-complexe_float_t* ProduitMatricielComplexe(const complexe_float_t* a, const complexe_float_t* b,const int m, const int k, const int n){
+inline complexe_float_t* ProduitMatricielComplexe(const complexe_float_t* a, const complexe_float_t* b,const int m, const int k, const int n){
     complexe_float_t* res = malloc(m*n*sizeof(complexe_float_t));
     complexe_float_t result;
     result.real = 0;
@@ -227,7 +228,7 @@ complexe_float_t* ProduitMatricielComplexe(const complexe_float_t* a, const comp
     return res;
 }
 
-complexe_double_t* ProduitMatricielComplexeDouble(const complexe_double_t* a, const complexe_double_t* b,const int m, const int k, const int n){
+inline complexe_double_t* ProduitMatricielComplexeDouble(const complexe_double_t* a, const complexe_double_t* b,const int m, const int k, const int n){
     complexe_double_t* res = malloc(m*n*sizeof(complexe_double_t));
     complexe_double_t result;
     result.real = 0;
@@ -246,26 +247,26 @@ complexe_double_t* ProduitMatricielComplexeDouble(const complexe_double_t* a, co
     return res;
 }
 
-void AdditionMatriciel(float* a, float* b, const int m, const int n){
+inline void AdditionMatriciel(float* a, float* b, const int m, const int n){
     for(int i=0;i<m*n;i++){
         b[i] = a[i] + b[i];
     }
 }
 
-void AdditionMatricielDouble(double* a, double* b, const int m, const int n){
+inline void AdditionMatricielDouble(double* a, double* b, const int m, const int n){
     for(int i=0;i<m*n;i++){
         b[i] = a[i] + b[i];
     }
 }
 
-void AdditionMatricielComplexe(complexe_float_t* a, complexe_float_t* b, const int m, const int n){
+inline void AdditionMatricielComplexe(complexe_float_t* a, complexe_float_t* b, const int m, const int n){
     for(int i=0;i<m*n;i++){
         b[i].real = a[i].real + b[i].real;
         b[i].imaginary = a[i].imaginary + b[i].imaginary;
     }
 }
 
-void AdditionMatricielComplexeDouble(complexe_double_t* a, complexe_double_t* b, const int m, const int n){
+inline void AdditionMatricielComplexeDouble(complexe_double_t* a, complexe_double_t* b, const int m, const int n){
     for(int i=0;i<m*n;i++){
         b[i].real = a[i].real + b[i].real;
         b[i].imaginary = a[i].imaginary + b[i].imaginary;

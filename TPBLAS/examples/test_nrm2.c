@@ -100,12 +100,12 @@ int main (int argc, char **argv){
         resc = mnblas_scnrm2(3,c1,1);
         c1[1].real +=0.1;
     }
-    //resc = mnblas_scnrm2(3,c1,1);
+    resc = mnblas_scnrm2(3,c1,1);
     end = _rdtsc () ;
 
     printf ("apres boucle resc : %f %lld cycles \n", resc, end-start) ;
 
-    calcul_flop ("nrm2 complexe float ", NB_FOIS*6, end-start) ;
+    calcul_flop ("nrm2 complexe float ", NB_FOIS*8, end-start) ;
 
     complexe_double_t z1[3];
     z1[0].real = 4.3;
@@ -130,7 +130,7 @@ int main (int argc, char **argv){
 
     printf ("apres boucle rescd : %lf %lld cycles \n", rescd, end-start) ;
 
-    calcul_flop ("nrm2 complexe double ", NB_FOIS*6, end-start) ;
+    calcul_flop ("nrm2 complexe double ", NB_FOIS*8, end-start) ;
 
     exit (0) ;
 }

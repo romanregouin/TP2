@@ -34,8 +34,7 @@ void vectorf_init (vfloat V, float x)
   return ;
 }
 
-void matricef_init (mcdouble V, double x)
-{
+void matricef_init (mcdouble V, double x){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE*VECSIZE; i++){
@@ -45,8 +44,7 @@ void matricef_init (mcdouble V, double x)
   return ;
 }
 
-void vectorcf_init (vcfloat V, double x)
-{
+void vectorcf_init (vcfloat V, double x){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++){
@@ -56,8 +54,7 @@ void vectorcf_init (vcfloat V, double x)
   return ;
 }
 
-void vectord_init (vdouble V, float x)
-{
+void vectord_init (vdouble V, float x){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++)
@@ -66,8 +63,7 @@ void vectord_init (vdouble V, float x)
   return ;
 }
 
-void vectorcd_init (vcdouble V, double x)
-{
+void vectorcd_init (vcdouble V, double x){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++){
@@ -77,8 +73,7 @@ void vectorcd_init (vcdouble V, double x)
   return ;
 }
 
-void vectorf_print (vfloat V)
-{
+void vectorf_print (vfloat V){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++)
@@ -88,8 +83,7 @@ void vectorf_print (vfloat V)
   return ;
 }
 
-void vectorcf_print (vcfloat V)
-{
+void vectorcf_print (vcfloat V){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++)
@@ -99,8 +93,7 @@ void vectorcf_print (vcfloat V)
   return ;
 }
 
-void vectord_print (vdouble V)
-{
+void vectord_print (vdouble V){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++)
@@ -110,8 +103,7 @@ void vectord_print (vdouble V)
   return ;
 }
 
-void vectorcd_print (vcdouble V)
-{
+void vectorcd_print (vcdouble V){
   register unsigned int i ;
 
   for (i = 0; i < VECSIZE; i++)
@@ -125,13 +117,12 @@ void vectorcd_print (vcdouble V)
 
 
 
-int main (int argc, char **argv)
-{
+int main (int argc, char **argv){
  unsigned long long start, end ;
  
  int i ;
- float alpha1=2.0;
- float alpha2=0.5;
+ //float alpha1=2.0;
+ //float alpha2=0.5;
  complexe_double_t alpha3;
  alpha3.imaginary=0;
  alpha3.real=2;
