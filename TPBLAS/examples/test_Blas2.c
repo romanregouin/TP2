@@ -8,7 +8,7 @@
 
 #define VECSIZE 256  // 512
 
-#define NB_FOIS 1
+#define NB_FOIS 1000
 
 typedef float vfloat[VECSIZE];
 typedef float mfloat[VECSIZE * VECSIZE];

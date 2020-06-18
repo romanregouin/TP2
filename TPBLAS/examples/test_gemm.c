@@ -7,7 +7,7 @@
 
 //#define VECSIZE    36//65536
 
-#define NB_FOIS    10
+#define NB_FOIS    1000
 
 float* matrice_float(int m, int n){
     float* res = malloc(m*n*sizeof(float));

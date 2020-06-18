@@ -1,8 +1,10 @@
 #include "mnblas.h"
+#include <omp.h>
 
 float  mnblas_sasum(const int N, const float *X, const int incX){
     float res = 0;
     float val;
+#pragma omp parallel for reduction(+:res)
     for(int i=0;i<N;i+=incX){
         val = X[i];
         if(val<0){
@@ -16,6 +18,7 @@ float  mnblas_sasum(const int N, const float *X, const int incX){
 double mnblas_dasum(const int N, const double *X, const int incX){
     double res = 0;
     double val;
+#pragma omp parallel for reduction(+:res)
     for(int i=0;i<N;i+=incX){
         val = X[i];
         if(val<0){
@@ -30,6 +33,7 @@ float  mnblas_scasum(const int N, const void *X, const int incX){
     float res = 0;
     float reel;
     float img;
+#pragma omp parallel for reduction(+:res)
     for(int i=0;i<N;i+=incX){
         reel = ((float*)X)[2*i];
         img = ((float*)X)[2*i+1];
@@ -48,6 +52,7 @@ double mnblas_dzasum(const int N, const void *X, const int incX){
     double res = 0;
     double reel;
     double img;
+#pragma omp parallel for reduction(+:res)
     for(int i=0;i<N;i+=incX){
         reel = ((double*)X)[2*i];
         img = ((double*)X)[2*i+1];
