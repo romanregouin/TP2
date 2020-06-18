@@ -1,3 +1,4 @@
+#include <omp.h>
 #include <stdio.h>
 #include <x86intrin.h>
 
@@ -5,9 +6,9 @@
 #include "flop.h"
 #include "mnblas.h"
 
-#define VECSIZE 36  // 512
+#define VECSIZE 256  // 512
 
-#define NB_FOIS 1000
+#define NB_FOIS 1
 
 typedef float vfloat[VECSIZE];
 typedef float mfloat[VECSIZE * VECSIZE];
@@ -167,7 +168,7 @@ int main(int argc, char **argv) {
 
   int i;
   init_flop();
-
+  printf("%d\n\n\n", omp_get_max_threads());
   vectord_init(vec_d1, 1.0);
   vectord_init(vec_d2, 1.0);
   matriced_init(m_d1, 1.0);

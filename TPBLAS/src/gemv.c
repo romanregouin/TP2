@@ -13,11 +13,11 @@ void mncblas_sgemv(const MNCBLAS_LAYOUT layout, const MNCBLAS_TRANSPOSE TransA,
   float tmp;
   if ((layout == MNCblasRowMajor && TransA == MNCblasNoTrans) ||
       (layout == MNCblasColMajor && TransA != MNCblasNoTrans)) {
+#pragma omp parallel for
     for (i = 0; i < M; i += incY) {
       i_m = i * M;
       tmp = 0;
-#pragma omp parallel
-#pragma omp for
+
       for (j = 0; j < N; j += 8) {
         tmp += *(A + i_m + j) * (*(X + j));
         tmp += *(A + i_m + j + 1) * (*(X + j + 1));
@@ -28,13 +28,14 @@ void mncblas_sgemv(const MNCBLAS_LAYOUT layout, const MNCBLAS_TRANSPOSE TransA,
         tmp += *(A + i_m + j + 6) * (*(X + j + 6));
         tmp += *(A + i_m + j + 7) * (*(X + j + 7));
       }
+
       *(Y + i) = *(Y + i) * beta + tmp * alpha;
     }
   } else {
+#pragma omp parallel for
     for (i = 0; i < N; i += incY) {
       tmp = 0;
-#pragma omp parallel
-#pragma omp for
+
       for (j = 0; j < M; j += 8) {
         tmp += *(A + i + j * M) * (*(X + j));
         tmp += *(A + i + j * M + 1) * (*(X + j + 1));
@@ -45,6 +46,7 @@ void mncblas_sgemv(const MNCBLAS_LAYOUT layout, const MNCBLAS_TRANSPOSE TransA,
         tmp += *(A + i + j * M + 6) * (*(X + j + 6));
         tmp += *(A + i + j * M + 7) * (*(X + j + 7));
       }
+
       *(Y + i) = *(Y + i) * beta + tmp * alpha;
     }
   }
